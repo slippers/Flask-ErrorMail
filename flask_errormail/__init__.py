@@ -11,7 +11,7 @@
 """
 import traceback
 
-def mail_on_500(app, recipients, sender='noreply@localhost'):
+def mail_on_500(app, recipients, sender='noreply@localhost', exception_view=None):
     '''Main function for setting up Flask-ErrorMail to send e-mails when 500 
     errors occur.
 
@@ -59,6 +59,12 @@ def mail_on_500(app, recipients, sender='noreply@localhost'):
         msg.body = '\n'.join(msg_contents) + '\n'
 
         mail.send(msg)
+
+        if view:
+            return view(exception)
+        else:
+            return 'server error'
+
 
     app.register_error_handler(500, email_exception)
 
