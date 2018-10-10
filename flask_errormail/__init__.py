@@ -61,7 +61,7 @@ def mail_on_500(app, recipients, sender='noreply@localhost', exception_view=None
         mail.send(msg)
 
         if view:
-            return view(exception)
+            return exception_view(exception)
         else:
             return 'server error'
 
